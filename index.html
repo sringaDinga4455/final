@@ -35,27 +35,52 @@
       font-weight: 500;
     }
 
-    .hero {
-      background: url('images/family-shelter.jpg') center/cover no-repeat;
+    /* --- PHOTO ROULETTE --- */
+    .photo-roulette {
+      width: 100%;
       height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-align: center;
-      background-blend-mode: overlay;
-      background-color: rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
     }
 
-    .hero h1 {
+    .roulette-img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+    }
+
+    .roulette-img.active {
+      opacity: 1;
+    }
+
+    /* Overlay text on slideshow */
+    .hero-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      text-align: center;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      z-index: 10;
+      width: 80%;
+    }
+
+    .hero-overlay h1 {
       font-size: 3rem;
       font-weight: 700;
     }
 
-    .hero p {
+    .hero-overlay p {
       font-size: 1.3rem;
-      max-width: 700px;
-      margin: 1rem auto;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .btn-donate {
@@ -76,11 +101,6 @@
       padding: 60px 20px;
     }
 
-    .impact-table {
-      margin: 0 auto;
-      max-width: 600px;
-    }
-
     footer {
       background-color: #ffb347;
       color: white;
@@ -92,6 +112,7 @@
 </head>
 
 <body>
+
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
@@ -101,7 +122,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="donate.html">Get Involved</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
@@ -109,3 +130,124 @@
       </div>
     </div>
   </nav>
+
+  <!-- PHOTO ROULETTE -->
+  <div class="photo-roulette">
+    <img src="OIP (1).webp" class="roulette-img active">
+    <img src="OIP (2).webp" class="roulette-img">
+    <img src="OIP.webp" class="roulette-img">
+    <img src="OIP2.webp" class="roulette-img">
+
+    <div class="hero-overlay">
+      <h1>Together, We Can End Family Homelessness</h1>
+      <p>Mary’s Place provides shelter, meals, and hope to families experiencing homelessness in Seattle.</p>
+      <a href="donate.html" class="btn btn-donate">Donate Now</a>
+    </div>
+  </div>
+
+  <!-- Mission -->
+  <section id="mission" class="text-center">
+    <div class="container">
+      <h2 class="fw-bold mb-3">Our Mission</h2>
+      <p>We believe every family deserves a safe place to call home. Mary’s Place empowers families with housing, job resources, and community support so they can thrive again.</p>
+      <img src="OIP.webp" alt="Families supported by Mary's Place" class="img-fluid mt-4" style="max-width:750px;">
+    </div>
+  </section>
+
+  <!-- Impact Table -->
+  <section id="impact" class="text-center">
+    <div class="container">
+      <h2 class="fw-bold mb-3">Your Impact</h2>
+      <p>Every dollar you give directly helps families find warmth and safety.</p>
+      <table class="table table-bordered impact-table mt-4">
+        <thead>
+          <tr>
+            <th>Donation</th>
+            <th>Impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>$25</td>
+            <td>Provides one warm meal for a family</td>
+          </tr>
+          <tr>
+            <td>$50</td>
+            <td>Funds a night of safe shelter</td>
+          </tr>
+          <tr>
+            <td>$100</td>
+            <td>Supplies essentials for a family moving into housing</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Interactive Donation Form -->
+  <section id="form" class="text-center">
+    <div class="container">
+      <h2 class="fw-bold mb-3">How Will You Help?</h2>
+      <p>Use the form below to see the impact of your contribution instantly.</p>
+      <form id="donationForm" class="mt-4">
+        <input type="number" id="donationAmount" placeholder="Enter donation amount ($)" class="form-control w-50 mx-auto" />
+        <button type="button" class="btn btn-donate mt-3" onclick="showImpact()">Calculate Impact</button>
+      </form>
+      <p id="impactMessage" class="mt-3 fw-bold"></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Mary’s Place Seattle | Designed by Srikaran Sriperumbudur</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Interactive Donation Calculator -->
+  <script>
+    function showImpact() {
+      const amount = document.getElementById('donationAmount').value;
+      const message = document.getElementById('impactMessage');
+      if (amount >= 100) {
+        message.innerText = "Your generosity can help a family transition into permanent housing!";
+      } else if (amount >= 50) {
+        message.innerText = "You’re providing a warm, safe night for a family in need.";
+      } else if (amount >= 25) {
+        message.innerText = "You’re helping feed a family tonight.";
+      } else if (amount > 0) {
+        message.innerText = "Every dollar counts — thank you for supporting families in need.";
+      } else {
+        message.innerText = "Please enter a donation amount to see your impact.";
+      }
+    }
+  </script>
+
+  <!-- PHOTO ROULETTE SCRIPT -->
+  <script>
+    let currentImage = 0;
+
+    function resizeImages() {
+      const imgs = document.querySelectorAll(".roulette-img");
+      imgs.forEach(img => {
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+        img.style.objectPosition = "center";
+      });
+    }
+
+    function changeImage() {
+      const images = document.querySelectorAll('.roulette-img');
+      images[currentImage].classList.remove('active');
+      currentImage = (currentImage + 1) % images.length;
+      images[currentImage].classList.add('active');
+    }
+
+    resizeImages();
+    setInterval(changeImage, 3000);
+  </script>
+
+</body>
+</html>

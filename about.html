@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | Mary’s Place</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    body { font-family: 'Poppins', sans-serif; background-color: #fffaf6; color: #333; }
+    nav { background-color: #E8674F; }
+    .navbar-brand, .nav-link { color: white !important; }
+    footer { background-color: #ffb347; color: white; text-align: center; padding: 20px; margin-top: 50px; }
+    .photo-roulette {
+      width: 100%;
+      height: 80vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .roulette-img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+    }
+
+    .roulette-img.active {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Marys Place</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="donate.html">Get Involved</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="container text-center py-5">
+    <h1 class="fw-bold mb-4">About Mary’s Place</h1>
+    <p class="mb-4">Since 1999, Mary’s Place has helped hundreds of families in Seattle find shelter, stability, and support. We believe that no child should sleep outside, and every family deserves a safe place to rest and rebuild.</p>
+    <div class="photo-roulette">
+    <img src="OIP (1).webp" class="roulette-img active">
+    <img src="OIP (2).webp" class="roulette-img">
+    <img src="OIP.webp" class="roulette-img">
+    <img src="OIP2.webp" class="roulette-img">
+    </div>
+    <p></p>
+    <p>Through partnerships with local organizations and volunteers, Mary’s Place provides emergency housing, meals, job resources, and emotional support to help families thrive again. Together, we’re breaking the cycle of homelessness — one family at a time.</p>
+  </section>
+
+  <footer>
+    <p>© 2025 Mary’s Place Seattle | Designed by Srikaran Sriperumbudur</p>
+  </footer>
+  <script>
+    let currentImage = 0;
+
+    function resizeImages() {
+      const imgs = document.querySelectorAll(".roulette-img");
+      imgs.forEach(img => {
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+        img.style.objectPosition = "center";
+      });
+    }
+
+    function changeImage() {
+      const images = document.querySelectorAll('.roulette-img');
+      images[currentImage].classList.remove('active');
+      currentImage = (currentImage + 1) % images.length;
+      images[currentImage].classList.add('active');
+    }
+
+    resizeImages();
+    setInterval(changeImage, 3000);
+  </script>
+</body>
+</html>

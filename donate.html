@@ -35,7 +35,7 @@
 </head>
 
 <body>
-  <!-- Navigation -->
+
   <nav class="navbar navbar-expand-lg">
     <div class="container">
       <a class="navbar-brand" href="#">Marys Place</a>
@@ -54,34 +54,97 @@
     </div>
   </nav>
 
-  <!-- Donate Header -->
+  
   <header class="text-center p-5">
     <h1 class="fw-bold">Make a Difference Today</h1>
     <p>Your support helps families find shelter, stability, and hope.</p>
   </header>
 
-  <!-- Donation Section -->
+  
   <section class="container text-center">
     <h2 class="section-title mb-4">Choose a Donation Amount</h2>
 
     <div class="row justify-content-center mb-4">
       <div class="col-md-3">
-        <button class="btn btn-donate w-100 mb-3">$25 – Meal for a Family</button>
+        <button type="button" class="btn btn-donate w-100 mb-3 preset-amount" data-amount="25">$25 – Meal for a Family</button>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-donate w-100 mb-3">$50 – Safe Shelter Night</button>
+        <button type="button" class="btn btn-donate w-100 mb-3 preset-amount" data-amount="50">$50 – Safe Shelter Night</button>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-donate w-100 mb-3">$100 – Move-In Essentials</button>
+        <button type="button" class="btn btn-donate w-100 mb-3 preset-amount" data-amount="100">$100 – Move-In Essentials</button>
       </div>
     </div>
 
     <h4 class="mt-4">Enter Custom Amount</h4>
-    <input type="number" class="form-control w-50 mx-auto mt-2" placeholder="Your amount ($)">
-    <button class="btn btn-donate mt-3">Donate</button>
+    <input id="customAmount" type="number" class="form-control w-50 mx-auto mt-2" placeholder="Your amount ($)">
+    <button type="button" id="donateBtn" class="btn btn-donate mt-3">Donate</button>
   </section>
+ 
+<section id="form" class="text-center">
+    <div class="container">
+      <h2 class="fw-bold mb-3">How Will You Help?</h2>
+      <p>Use the form below to see the impact of your contribution instantly.</p>
+      <form id="donationForm" class="mt-4">
+        <input type="number" id="donationAmount" placeholder="Enter donation amount ($)" class="form-control w-50 mx-auto" />
+        <button type="button" class="btn btn-donate mt-3" onclick="showImpact()">Calculate Impact</button>
+      </form>
+      <p id="impactMessage" class="mt-3 fw-bold"></p>
+    </div>
+  </section>
+  <script>
+    function showImpact() {
+      const amount = document.getElementById('donationAmount').value;
+      const message = document.getElementById('impactMessage');
+      if (amount >= 100) {
+        message.innerText = "Your generosity can help a family transition into permanent housing!";
+      } else if (amount >= 50) {
+        message.innerText = "You’re providing a warm, safe night for a family in need.";
+      } else if (amount >= 25) {
+        message.innerText = "You’re helping feed a family tonight.";
+      } else if (amount > 0) {
+        message.innerText = "Every dollar counts — thank you for supporting families in need.";
+      } else {
+        message.innerText = "Please enter a donation amount to see your impact.";
+      }
+    }
+  </script>
 
-  <!-- Footer -->
+  <script>
+   
+    document.querySelectorAll('.preset-amount').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const a = btn.dataset.amount;
+        const input = document.getElementById('customAmount');
+        if (input) {
+          input.value = a;
+          input.focus();
+        }
+      });
+    });
+
+    
+    function processDonation() {
+      const input = document.getElementById('customAmount');
+      const raw = input ? input.value : '';
+      const amount = parseFloat(raw);
+      if (!amount || amount <= 0) {
+        alert('Please enter a valid donation amount (greater than $0).');
+        if (input) input.focus();
+        return;
+      }
+
+      alert('Thank you for your generous donation of $' + amount.toFixed(2) + '!');
+      if (input) input.value = '';
+
+    }
+
+    const donateBtn = document.getElementById('donateBtn');
+    if (donateBtn) donateBtn.addEventListener('click', processDonation);
+  </script>
+
+
+  
   <footer>
     <p>© 2025 Mary’s Place Seattle | Designed by Srikaran Sriperumbudur</p>
   </footer>
